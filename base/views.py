@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.db.models import Q
-from .models import Room, Topic
+from .models import Room, Topic, User
 from .forms import RoomForm
+from django.contrib import messages
 
 
 # Create your views here.
@@ -15,6 +16,16 @@ from .forms import RoomForm
 # Funation base view
 
 def loginPage(request):
+    
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        
+        try:
+            user = User.objects.get(username=username)
+        except:
+            messages.error(request, 'User does not exist')
+            
     context = {}
     return render(request, 'base/login_register.html', context)
     
