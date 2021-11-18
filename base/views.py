@@ -80,7 +80,7 @@ def home(request):
     
     topics = Topic.objects.all()
     room_count = rooms.count()
-    room_messages = Message.objects.all() #Activity feed
+    room_messages = Message.objects.filter(Q(room__topic__name__icontains=q)) #Activity feed
     
     context = {
         'rooms': rooms, 
